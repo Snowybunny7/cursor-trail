@@ -1,0 +1,35 @@
+// Function to generate random rainbow colors
+function getRandomColor() {
+    const letters = '6789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 10)];
+    }
+    return color;
+}
+
+// Function to create a trail div and append it to the body
+function createTrailPart(x, y) {
+    const trailPart = document.createElement('div');
+    trailPart.style.position = 'absolute';
+    trailPart.style.backgroundColor = getRandomColor();
+    trailPart.style.left = `${x}px`;
+    trailPart.style.top = `${y}px`;
+    trailPart.style.width = '10px';
+    trailPart.style.height = '10px';
+    trailPart.style.borderRadius = '50%';
+    trailPart.style.pointerEvents = 'none'; // Ignore the div when capturing mouse events
+    document.body.appendChild(trailPart);
+
+    // Remove the trail part after a short delay
+    setTimeout(() => {
+        document.body.removeChild(trailPart);
+    }, 500); // Adjust time as needed for the desired effect
+}
+
+// Event listener for the mousemove event to create the trail
+document.addEventListener('mousemove', (e) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    createTrailPart(x, y);
+});
